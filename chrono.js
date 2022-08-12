@@ -1,6 +1,7 @@
 const hoursElem = document.getElementById("hour")
 const minutesElem = document.getElementById("minutes")
 const secondsElem = document.getElementById("seconds")
+const msElem = document.getElementById("ms")
 const start = document.getElementById("start")
 const play = document.getElementById("play")
 const pause = document.getElementById("pause")
@@ -10,6 +11,7 @@ let interval
 let hours = 0
 let minutes = 0
 let seconds = 0
+let ms = 0
 
 const updateChrono = () => {
   if (minutes === 59 && seconds === 59) {
@@ -25,12 +27,30 @@ const updateChrono = () => {
       minutes = "0" + minutes
     }
     seconds = 0
-  } else {
+  } else if (ms === 99) {
     seconds++
+    if (seconds < 10) {
+      seconds = "0" + seconds
+    }
+    ms = 0
+  } else {
+    ms++
+    if (ms < 10) {
+      ms = "0" + ms
+    }
   }
 
-  secondsElem.textContent = seconds =
-    seconds < 10 ? "0" + seconds : seconds
+  if (ms === 0) {
+    msElem.textContent = "00"
+  } else {
+    msElem.textContent = ms
+  }
+
+  if (seconds === 0) {
+    secondsElem.textContent = "00"
+  } else {
+    secondsElem.textContent = seconds
+  }
 
   if (minutes === 0) {
     minutesElem.textContent = "00"
@@ -52,7 +72,7 @@ start.addEventListener("click", (e) => {
 
   if (iteration === 0) {
     iteration++
-    interval = setInterval(updateChrono, 1000)
+    interval = setInterval(updateChrono, 10)
     start.textContent = "reset"
     pause.classList.remove("invisible")
   } else {
@@ -80,7 +100,7 @@ pause.addEventListener("click", (e) => {
 
 play.addEventListener("click", (e) => {
   e.preventDefault()
-  interval = setInterval(updateChrono, 1000)
+  interval = setInterval(updateChrono, 10)
   pause.classList.remove("invisible")
   play.classList.add("invisible")
 })
