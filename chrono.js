@@ -71,8 +71,9 @@ start.addEventListener("click", (e) => {
   e.preventDefault()
 
   if (iteration === 0) {
-    iteration++
+    iteration = 1
     interval = setInterval(updateChrono, 10)
+
     start.textContent = "reset"
     pause.classList.remove("invisible")
   } else {
@@ -80,14 +81,20 @@ start.addEventListener("click", (e) => {
     hours = 0
     minutes = 0
     seconds = 0
+    ms = 0
 
     hoursElem.textContent = "00"
     minutesElem.textContent = "00"
     secondsElem.textContent = "00"
+    msElem.textContent = "00"
 
     clearInterval(interval)
     start.textContent = "start"
     pause.classList.add("invisible")
+
+    if (!play.classList.contains("invisible")) {
+      play.classList.add("invisible")
+    }
   }
 })
 
